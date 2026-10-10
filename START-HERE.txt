@@ -1,0 +1,26 @@
+CODEYOUNG TRIAL BOOKING — MONGODB START HERE
+
+YOU DO NOT NEED TO INSTALL MONGODB LOCALLY if you use MongoDB Atlas.
+
+1) Create a free MongoDB Atlas account: https://www.mongodb.com/cloud/atlas/register
+2) Create a free cluster, a database user, and allow your current IP in Network Access.
+3) Choose Connect > Drivers > Node.js and copy the connection string.
+4) In PowerShell at the project folder:
+   cd backend
+   Copy-Item .env.example .env
+5) Edit backend/.env and replace MONGODB_URI with your Atlas connection string.
+   Keep EMAIL_MODE=console initially; SMTP is optional.
+6) In that backend terminal:
+   npm install
+   npm run dev
+7) Open a SECOND PowerShell terminal in the project folder:
+   cd frontend
+   Copy-Item .env.example .env
+   npm install
+   npm run dev
+8) Open http://localhost:5173
+9) API health check: http://localhost:4000/api/health
+   It should show "database":"connected".
+
+Atlas network access must allow your current IP. If the Atlas database password contains special URL characters (#, @, /, :, %), URL-encode those characters in MONGODB_URI.
+Do not share or commit backend/.env.
