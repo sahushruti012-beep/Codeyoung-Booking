@@ -190,8 +190,8 @@ Keep local `.env` files and all real credentials out of the Git repository. Incl
 
 ## GitHub Profile
 
-[github.com/sahushruti012-beep](https://github.com/sahushruti012-beep)
+https://github.com/sahushruti012-beep
 
 ## Project Repository
 
-[Codeyoung Trial Class Booking System](https://github.com/sahushruti012-beep/Codeyoung-Booking)
+https://github.com/sahushruti012-beep/Codeyoung-Booking.git
