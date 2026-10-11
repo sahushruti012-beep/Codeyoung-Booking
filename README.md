@@ -1,8 +1,15 @@
+
 # Codeyoung Trial Class Booking System
 
-A full-stack trial class booking application developed using React, Node.js, Express, MongoDB, Luxon, and Nodemailer. The system enables parents to book trial classes, automatically assigns available mentors, handles time-zone differences, and supports email notifications.
+A full-stack web application for managing trial-class bookings, mentor allocation, time-zone-aware scheduling, and email notifications. Built using React, Node.js, Express, MongoDB, Luxon, and Nodemailer.
 
-## Features
+## 1. Project Overview
+
+The Codeyoung Trial Class Booking System streamlines the trial-class scheduling process by allowing parents to book classes, checking mentor availability, and assigning mentors automatically.
+
+The application supports time-zone-aware scheduling, mentor booking limits, mentor and admin dashboards, and optional email notifications.
+
+## 2. Key Features
 
 - Parent booking form with IANA time-zone selection.
 - Ten mentor records initialized automatically by the backend.
@@ -13,9 +20,9 @@ A full-stack trial class booking application developed using React, Node.js, Exp
 - Demo class links associated with bookings.
 - Email outbox records and optional SMTP notifications using Nodemailer.
 - Automatic MongoDB collection and index initialization.
-- REST API for mentors, available slots, and bookings.
+- REST API endpoints for mentors, available slots, and bookings.
 
-## Technology Stack
+## 3. Technology Stack
 
 | Component | Technology |
 |---|---|
@@ -25,33 +32,50 @@ A full-stack trial class booking application developed using React, Node.js, Exp
 | Date and time handling | Luxon |
 | Email notifications | Nodemailer |
 | Testing | Node.js test runner |
+| Version control | Git and GitHub |
 
-## Database Architecture
+## 4. Database Architecture
 
-**This application currently uses MongoDB as its only active database. MySQL is not required to run the application.**
+**MongoDB is the active database used by the current application. MySQL is not required to run this project.**
 
-MongoDB was selected for the current backend because it works with the implemented Node.js application and stores application data as documents. The backend connects to MongoDB, initializes the required collections and indexes, and ensures that the mentor records are available.
+The Node.js backend connects to MongoDB to store and manage application data. It initializes the required collections and indexes and ensures that the mentor records are available.
 
-The project also contains `database/setup.sql`, which defines a MySQL database schema. This file is retained as a reference from the SQL-based database design. The current backend does not execute this file or connect to MySQL.
+The repository also contains `database/setup.sql`, which defines a MySQL schema retained as a reference from the SQL-based database design.
 
-Therefore, the two database references serve different purposes:
+The two database references serve different purposes:
 
-- **MongoDB:** The active database used by the current application for its booking operations.
-- **MySQL (`database/setup.sql`):** A reference schema only; it is not part of the current runtime configuration.
+- **MongoDB:** The active database used by the current backend for booking operations.
+- **MySQL (`database/setup.sql`):** A reference SQL schema that the current backend does not execute or use.
 
-There is no need to configure both databases. To run the submitted application, configure MongoDB as described below.
+Only MongoDB needs to be configured to run the current application. The SQL file is not part of the active database workflow.
 
-## Requirements
+## 5. System Requirements
 
-- Node.js and npm
-- MongoDB configured as a replica set, or a MongoDB Atlas deployment
-- VS Code or another code editor (recommended)
+Before starting the application, install:
 
-MongoDB transactions require replica-set support or a compatible sharded cluster.
+- Node.js and npm.
+- MongoDB configured as a replica set, or a MongoDB Atlas deployment.
+- VS Code or another code editor (recommended).
+- Git, if you want to clone the repository.
 
-## Backend Setup
+**Important:** The booking implementation uses MongoDB transactions. The database must support transactions through a replica set or a compatible sharded cluster.
 
-Open PowerShell in the project root directory and run:
+## 6. Installation and Setup
+
+### Step 1: Clone the Repository
+
+Open PowerShell and run:
+
+```powershell
+git clone https://github.com/sahushruti012-beep/Codeyoung-Booking.git
+cd Codeyoung-Booking
+```
+
+If you have already downloaded the project, open PowerShell in the existing project folder instead.
+
+### Step 2: Configure the Backend
+
+Move into the backend directory:
 
 ```powershell
 cd backend
@@ -59,57 +83,100 @@ Copy-Item .env.example .env
 npm install
 ```
 
-Open `backend/.env` and configure the MongoDB settings:
+Open `backend/.env` and configure the MongoDB connection:
 
 ```dotenv
 MONGODB_URI=mongodb://127.0.0.1:27017/?replicaSet=rs0
 MONGODB_DATABASE=codeyoung_booking
 ```
 
-The URI shown above is an example for a local MongoDB replica set named `rs0`. If you use MongoDB Atlas, replace it with your own connection string.
+The URI above is an example for a local MongoDB replica set named `rs0`. If you use MongoDB Atlas, replace it with your own connection string.
 
-Configure the remaining environment variables as needed. Keep database credentials and email passwords in the local `.env` file; never commit real credentials to GitHub.
+Keep actual credentials in your local `.env` file. Never upload database credentials or passwords to GitHub.
 
-Start the backend:
+### Step 3: Start the Backend
+
+From the `backend` directory, run:
 
 ```powershell
 npm run dev
 ```
 
-The API runs at `http://localhost:4000`.
+The API should be available at:
 
-To check the API, open `http://localhost:4000/api/health` in your browser.
+`http://localhost:4000`
 
-## Frontend Setup
+To verify the API, open:
 
-Open a second PowerShell terminal in the project root:
+`http://localhost:4000/api/health`
+
+Keep the backend terminal open while using the application.
+
+### Step 4: Configure the Frontend
+
+Open a second PowerShell terminal in the project root directory:
 
 ```powershell
 cd frontend
 Copy-Item .env.example .env
 npm install
+```
+
+If you are already inside the project root, these commands will work as shown. Otherwise, navigate to the project root before running them.
+
+### Step 5: Start the Frontend
+
+From the `frontend` directory, run:
+
+```powershell
 npm run dev
 ```
 
-Open the local URL displayed by Vite, usually `http://localhost:5173`.
+Open the local URL displayed by Vite, usually:
 
-Keep the backend running while using the frontend.
+`http://localhost:5173`
 
-## Booking Workflow
+Keep both the backend and frontend running while testing the complete application.
 
-1. Open the parent booking page.
-2. Enter the parent's details and email address.
-3. Select a future date, an available time, and the parent's time zone.
-4. Submit the booking.
-5. Confirm that the booking is saved and a mentor is assigned.
-6. Review bookings in the Mentor Dashboard or Admin Dashboard.
-7. Configure SMTP if email notifications need to be tested.
+## 7. Booking Workflow
+
+### Step 1: Enter Parent Details
+
+Open the parent booking page and provide the required parent information and email address.
+
+### Step 2: Select a Date and Time
+
+Choose a future date, an available time slot, and the parent's time zone.
+
+### Step 3: Validate Availability
 
 The backend checks mentor availability, schedule overlaps, and the configured mentor daily booking limit.
 
-## Email Configuration
+### Step 4: Assign a Mentor
 
-The application uses Nodemailer for email notifications. Gmail SMTP can be configured using a Google App Password.
+The backend selects an eligible mentor according to the implemented assignment and scheduling rules.
+
+### Step 5: Save the Booking
+
+The booking is stored in MongoDB, with booking instants represented in UTC.
+
+### Step 6: Review the Booking
+
+Use the Mentor Dashboard or Admin Dashboard to review booking information.
+
+### Step 7: Send Email Notifications
+
+Configure SMTP if you want the application to send real booking emails.
+
+## 8. Email Configuration
+
+The application uses Nodemailer to support email notifications. Gmail SMTP is one available configuration option.
+
+### Step 1: Create a Google App Password
+
+Enable two-step verification on your Google account and create an App Password if your account is eligible.
+
+### Step 2: Configure SMTP
 
 Add the following settings to `backend/.env`:
 
@@ -123,22 +190,26 @@ SMTP_PASSWORD=your-google-app-password
 SMTP_FROM="Codeyoung Trials <your-gmail-address>"
 ```
 
-Replace the example values with your own credentials. Restart the backend after changing environment variables.
+Replace the example values with your own credentials.
 
-Never publish real SMTP credentials, Google App Passwords, or database credentials.
+### Step 3: Restart the Backend
 
-## API Endpoints
+Save the environment file and restart the backend so the updated configuration takes effect.
 
-| Method | Endpoint | Purpose |
+**Security note:** Never commit real email passwords, Google App Passwords, or database credentials to GitHub.
+
+## 9. API Endpoints
+
+| Method | Endpoint | Description |
 |---|---|---|
 | GET | `/api/health` | Check API health |
-| GET | `/api/mentors` | Retrieve mentors |
+| GET | `/api/mentors` | Retrieve mentor information |
 | GET | `/api/slots?date=YYYY-MM-DD&timeZone=America/New_York` | Retrieve available time slots |
 | POST | `/api/bookings` | Create a booking |
 | GET | `/api/bookings?role=admin` | Retrieve bookings for the admin dashboard |
 | GET | `/api/bookings?role=mentor&mentorId=1` | Retrieve bookings for a mentor |
 
-## Example Booking Request
+## 10. Example Booking Request
 
 The following JSON illustrates a request to `POST /api/bookings`:
 
@@ -152,39 +223,84 @@ The following JSON illustrates a request to `POST /api/bookings`:
 }
 ```
 
-The `startAt` value represents the parent's local date and time in the specified `parentTimeZone`. The backend converts the time to UTC for storage and applies the booking rules.
+`startAt` represents the parent's local wall-clock date and time in the specified `parentTimeZone`. The backend converts the time to UTC and applies the scheduling rules.
 
 Use a valid future date and an available time when testing.
 
-## Testing
+## 11. Running Tests
 
-Run the backend tests from the project root:
+### Step 1: Open the Backend Directory
+
+From the project root, run:
 
 ```powershell
 cd backend
+```
+
+### Step 2: Execute the Tests
+
+Run:
+
+```powershell
 npm test
 ```
 
 Review the test output to determine whether the tests pass.
 
-## Important Notes and Limitations
+## 12. Limitations
 
-- Booking instants are stored in UTC.
-- IANA time-zone identifiers are used for time-zone conversion.
-- Daylight-saving transitions can produce nonexistent or ambiguous local times.
-- Mentor daily booking limits are counted using each mentor's configured time zone.
-- MongoDB must support transactions for the implemented transaction-based booking operations.
-- Class links are demo links; the application does not automatically create Google Meet meetings.
+- Sample mentor records are intended for demonstration purposes.
+- The default trial-class duration is 30 minutes.
+- Mentor selection follows a first-eligible assignment strategy.
+- Booking cancellation and rescheduling are not currently exposed through API endpoints.
+- Automatic email retries require a background worker or message queue.
+- Class links are demo links; automatic Google Meet meeting creation is not implemented.
 - The dashboards do not provide production-grade authentication or authorization.
-- Real email delivery requires valid SMTP configuration.
+- The application requires a MongoDB deployment that supports transactions.
 
-## Project Documentation
+## 13. Future Development
 
-The repository contains the application source code, environment-variable templates, and project documentation. The `database/setup.sql` file is included for reference and is not required for application setup.
+- Replace sample mentor records with a configurable mentor management system.
+- Support configurable trial-class durations and scheduling rules.
+- Improve mentor assignment using workload balancing and availability optimization.
+- Add booking cancellation and rescheduling API endpoints.
+- Implement automatic email retries using a background worker or message queue.
+- Integrate Google Meet and Google Calendar APIs for automated meeting creation.
+- Implement secure authentication and role-based access control for parents, mentors, and administrators.
+- Add automated reminders and booking status notifications.
+- Expand automated tests for scheduling conflicts, time-zone conversions, and daylight-saving transitions.
+- Prepare the application for production with monitoring, logging, rate limiting, and database backup procedures.
 
-Keep local `.env` files and all real credentials out of the Git repository. Include the required project documentation and AI conversation transcript if requested by the manager.
+## 14. Security and Configuration
 
-## Author
+- Keep `.env` files out of Git.
+- Commit `.env.example` files containing placeholder values only.
+- Never publish SMTP passwords, Google App Passwords, or database credentials.
+- Implement secure authentication and authorization before exposing the application to real users.
+- Use secure environment configuration for production deployments.
+
+## 15. Project Structure
+
+```text
+Codeyoung-Booking/
+├── backend/
+│   ├── src/
+│   │   ├── db.js
+│   │   ├── bookingService.js
+│   │   └── server.js
+│   ├── .env.example
+│   └── package.json
+├── frontend/
+│   ├── .env.example
+│   └── package.json
+├── database/
+│   └── setup.sql
+└── README.md
+```
+
+This is a simplified overview of the main project files. Additional files may exist in the repository.
+
+## 16. Author
 
 **Shruti Sahu**
 
@@ -195,3 +311,4 @@ https://github.com/sahushruti012-beep
 ## Project Repository
 
 https://github.com/sahushruti012-beep/Codeyoung-Booking.git
+
