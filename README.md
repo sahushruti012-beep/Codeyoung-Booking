@@ -183,3 +183,15 @@ Review the test output to determine whether the tests pass.
 The repository contains the application source code, environment-variable templates, and project documentation. The `database/setup.sql` file is included for reference and is not required for application setup.
 
 Keep local `.env` files and all real credentials out of the Git repository. Include the required project documentation and AI conversation transcript if requested by the manager.
+
+## Author
+
+**Shruti Sahu**
+
+## GitHub Profile
+
+[github.com/sahushruti012-beep](https://github.com/sahushruti012-beep)
+
+## Project Repository
+
+[Codeyoung Trial Class Booking System](https://github.com/sahushruti012-beep/Codeyoung-Booking)
